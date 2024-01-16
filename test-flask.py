@@ -38,7 +38,7 @@ class UserViewFunctions(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn('Jordan', html)
 
-    def test_create_users(self):
+    def test_add_users_page(self):
         with app.test_client() as client:
             resp = client.get("/users/new")
             html = resp.get_data(as_text=True)
