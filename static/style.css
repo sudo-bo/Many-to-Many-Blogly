@@ -1,0 +1,30 @@
+* {
+  font-family: "Calibri";
+  font-size: 16px;
+}
+
+/* copied */
+.button {
+  background-color: #4caf50; /* Green background */
+  border: none;
+  color: white; /* White text */
+  padding: 10px 20px; /* Some padding */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px; /* Default font size */
+  margin: 4px 2px;
+  transition: 0.3s; /* Smooth transition for hover effect */
+  cursor: pointer; /* Cursor changes to a hand icon */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.button:hover {
+  background-color: #45a049; /* Darker shade of green for hover state */
+}
+
+.button:active {
+  background-color: #3e8e41; /* Even darker green when the button is clicked */
+  box-shadow: 0 5px #666; /* "Pressing down" effect */
+  transform: translateY(4px); /* Moves the button down 4px */
+}
