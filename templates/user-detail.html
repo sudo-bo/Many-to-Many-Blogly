@@ -3,13 +3,28 @@
 <img src="{{user.image_url}}" alt="User's profile picture" style="width: 100px; height: auto; border-radius: 10px" />
 <div>
   <form action="/users/{{ user.id }}/edit">
-    <input type="hidden" name="id" value="{{ user.id }}" />
+    <!-- <input type="hidden" name="id" value="{{ user.id }}" /> -->
     <button type="submit">Edit</button>
   </form>
 
   <form action="/users/{{ user.id }}/delete" method="post">
-    <input type="hidden" name="id" value="{{ user.id }}" />
+    <!-- <input type="hidden" name="id" value="{{ user.id }}" /> -->
     <button type="submit">Delete</button>
+  </form>
+</div>
+
+<div>
+  <ul>
+    {% for post in user.posts %}
+    <li><a href="/posts/{{ post.id }}/edit">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+<br />
+<hr />
+<div>
+  <form action="/users/{{ user.id }}/posts/new">
+    <button type="submit">Add Post</button>
   </form>
 </div>
 {% endblock %}

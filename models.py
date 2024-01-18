@@ -1,6 +1,7 @@
 """Models for Blogly."""
 
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()
 def connect_db(app):
@@ -26,5 +27,21 @@ class User(db.Model):
     # to provide info for user-detail.html
     @classmethod
     def find_user(cls, id):
+        return cls.query.get_or_404(id)
+
+class Post(db.Model):
+    """Users."""
+
+    __tablename__ = 'posts'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(50), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship('User', backref='posts')
+
+    @classmethod
+    def find_post(cls, id):
         return cls.query.get_or_404(id)
 

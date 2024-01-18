@@ -2,7 +2,7 @@
 
 from flask import Flask, render_template, redirect, request
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db, connect_db, User
+from models import db, connect_db, User, Post
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
@@ -71,3 +71,55 @@ def delete_user(id):
     db.session.commit()
 
     return redirect("/users")
+
+
+#  part 2 - adding posts
+#
+#
+
+@app.route('/users/<int:id>/posts/new')
+def add_post_page(id):
+    user = User.find_user(id) 
+    return render_template("add-post.html", user=user)
+
+@app.route('/users/<int:id>/posts/new', methods = ['POST'])
+def add_post(id):
+    user = User.find_user(id) # returns a 404 error if not found
+    post_title = request.form['title']
+    post_content = request.form['content']
+
+    new_post = Post(title = post_title, content = post_content, user_id = user.id)
+    db.session.add(new_post)
+    db.session.commit()
+
+    return render_template("user-detail.html", user=user)
+
+@app.route('/posts/<int:id>')
+def show_post(id):
+    post = Post.find_post(id) # returns a 404 error if not found
+    return render_template("post-detail.html", post=post)
+
+@app.route('/posts/<int:id>/edit')
+def edit_post_page(id):
+    post = Post.find_post(id)
+    return render_template("edit-post.html", post=post)
+
+
+@app.route('/posts/<int:id>/edit', methods = ['POST'])
+def edit_post(id):
+    post = Post.find_post(id)
+
+    post.title = request.form['title']
+    post.content = request.form['content']
+
+    db.session.commit()
+
+    return redirect(f'/posts/{id}')
+
+@app.route('/posts/<int:id>/delete', methods = ['POST'])
+def delete_post(id):
+    post = Post.find_post(id) # returns a 404 error if not found
+    user_id = post.user.id
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(f"/users/{user_id}")

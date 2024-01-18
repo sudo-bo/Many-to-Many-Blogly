@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block title %}Post Details{% endblock %} {% block content %}
+<h2>{{ post.user.first_name }} {{ post.user.last_name }}'s Post:</h2>
+<hr />
+<h1>&#9;Title: {{ post.title }}</h1>
+<p>&#9;Content: {{ post.content }}</p>
+<hr />
+<br />
+<div>
+  <form action="/users/{{ post.user.id }}" method="get">
+    <button type="submit">Back to Your Posts</button>
+  </form>
+
+  <form action="/posts/{{ post.id }}/edit">
+    <button type="submit">Edit</button>
+  </form>
+
+  <form action="/posts/{{ post.id }}/delete" method="post">
+    <button type="submit">Delete</button>
+  </form>
+</div>
+{% endblock %}
