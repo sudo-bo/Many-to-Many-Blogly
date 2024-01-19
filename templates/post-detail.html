@@ -3,6 +3,10 @@
 <hr />
 <h1>&#9;Title: {{ post.title }}</h1>
 <p>&#9;Content: {{ post.content }}</p>
+<p>Tags:</p>
+{% for tag in post.tags %}
+<span><a href="/tags/{{ tag.id }}">{{ tag.name }} </a></span>
+{% endfor %}
 <hr />
 <br />
 <div>
